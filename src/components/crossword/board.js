@@ -31,7 +31,7 @@ function Board() {
     });
   }
   let SORTED_CLUE_LIST = sortKeyWords(ANCESTORS);
-  let REMAINING_WORDS = SORTED_CLUE_LIST;
+  let REMAINING_WORDS = SORTED_CLUE_LIST; // Changing the the length of this array may also limit the amount of questions that are inserted
   const [clues, setClues] = useState([]);
   const [board, setBoard] = useState([]);
   const [vertClues, setVertClues] = useState([]);
