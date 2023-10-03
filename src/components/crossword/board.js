@@ -25,7 +25,7 @@ function Board() {
   for (const [key, value] of userFSData) {
     let currentAncestorName = value.name.compressedName;
     ANCESTORS.push({
-      CLUE: currentAncestorName,
+      CLUE: currentAncestorName, // Changing this will change the clue
       ANSWER: currentAncestorName,
       ASCENDENCY_NUM: key,
     });
@@ -166,6 +166,7 @@ function Board() {
   ) {
     let finished = false;
     let attemptedInsertions = 0;
+    let succesfulInsertions = 0;
     while (!finished) {
       for (let i = 0; i < remainingWords.length; i++) {
         attemptedInsertions++;
@@ -178,11 +179,15 @@ function Board() {
           remainingWords[i].ASCENDENCY_NUM
         );
         if (wordInserted == true) {
+          succesfulInsertions++;
           break;
         }
       }
-      if (remainingWords.length < 1 || attemptedInsertions >= 10) {
-        // CHANGE THIS TO GET 10 words
+      if (succesfulInsertions == 4) {
+        // succesful insersitions + 1 is the total number of questions that will be added
+        finished = true;
+      }
+      if (remainingWords.length < 1 || attemptedInsertions >= 100) {
         finished = true;
       }
       if (finished) {
