@@ -30,6 +30,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/crossword": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/crossword.js"
+    ],
     "/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

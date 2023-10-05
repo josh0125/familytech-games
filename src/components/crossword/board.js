@@ -39,6 +39,26 @@ function Board() {
   const [loading, setLoading] = useState(true);
   const [puzzleIsCorrect, setPuzzleIsCorrect] = useState(false);
   const inputLocation = useRef(new Array());
+  
+  const [crosswordInput, setCrosswordInput] = useState()
+  
+  const refreshBoard = () => {
+    setBoard(
+      setUpBoard(
+        BOARD,
+        SORTED_CLUE_LIST,
+        START_SQUARES,
+        ADDED_WORDS,
+        REMAINING_WORDS,
+        NOT_ADDED
+      )
+    );
+  };
+
+  useEffect(() => {
+    // Initialize or refresh the board whenever inputValue changes
+    refreshBoard();
+  }, [crosswordInput]);
 
   //Tells the page if it should be loading to make sure the clues are all set up before it is shown to the user
   useEffect(() => {
@@ -93,6 +113,10 @@ function Board() {
     newBoard[row].CURRENT_ROW[col].CHARACTER = letter;
     setBoard(newBoard);
     setPuzzleIsCorrect(checkIfFinished());
+    if (inputLocation.current[row * DIMENSIONS + col].value) {
+      
+    }
+
     if (inputLocation.current[row * DIMENSIONS + col].value == "") {
       if (inputLocation.current[row * DIMENSIONS + col - 1].value != "") {
         inputLocation.current[row * DIMENSIONS + col - 1].focus();
@@ -160,6 +184,8 @@ function Board() {
     START_SQUARES,
     NOT_ADDED
   ) {
+    let successfulInsertions = 0
+
     let finished = false;
     let attemptedInsertions = 0;
     while (!finished) {
@@ -174,8 +200,12 @@ function Board() {
           remainingWords[i].ASCENDENCY_NUM
         );
         if (wordInserted == true) {
+          successfulInsertions++
           break;
         }
+      }
+      if (successfulInsertions == crosswordInput ) {
+       finished = true;
       }
       if (remainingWords.length < 1 || attemptedInsertions > 100) {
         finished = true;
@@ -608,6 +638,7 @@ function Board() {
       SORTED_CLUE_LIST[0].ASCENDENCY_NUM
     );
     shuffle(REMAINING_WORDS);
+    
     insertAllWords(
       BOARD,
       REMAINING_WORDS,
@@ -622,6 +653,7 @@ function Board() {
     
     return BOARD;
   }
+
   // Inserts the first word at a set position in the board
   function insertFirstWord(
     rowIndex,
@@ -723,6 +755,13 @@ function Board() {
           );
         })}
         {(START_SQUARES = [])}
+      </div>
+      <div>
+          <label>Number of stuff {crosswordInput}</label>
+          <input type="int"
+            value={crosswordInput} // Use the state variable as the value of the input
+            onChange={(e) => setCrosswordInput(e.target.value)}>
+          </input>
       </div>
       <ClueList
         verticalClues={vertClues}
