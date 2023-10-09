@@ -8,7 +8,7 @@ import axios from "axios";
 
 let START_SQUARES = [];
 
-function Board() {
+function Board(props) {
   let BOARD = [];
   let finished = false;
   let ADDED_WORDS = [];
@@ -20,6 +20,7 @@ function Board() {
   const { userFSData } = useUser();
   let ANCESTORS = [];
   let ascendencyNums = [];
+  const NUMBER_OF_WORDS = props.numWords;
 
   //Creates an array of all names that could be added to the crossword
   for (const [key, value] of userFSData) {
@@ -55,7 +56,8 @@ function Board() {
         START_SQUARES,
         ADDED_WORDS,
         REMAINING_WORDS,
-        NOT_ADDED
+        NOT_ADDED,
+        NUMBER_OF_WORDS
       )
     );
   }, []);
@@ -162,7 +164,8 @@ function Board() {
     remainingWords,
     addedWords,
     START_SQUARES,
-    NOT_ADDED
+    NOT_ADDED,
+    NUMBER_OF_WORDS
   ) {
     let finished = false;
     let attemptedInsertions = 0;
@@ -183,7 +186,7 @@ function Board() {
           break;
         }
       }
-      if (succesfulInsertions == 4) {
+      if (succesfulInsertions == NUMBER_OF_WORDS - 1) {
         // succesful insersitions + 1 is the total number of questions that will be added
         finished = true;
       }
@@ -569,7 +572,8 @@ function Board() {
     START_SQUARES,
     ADDED_WORDS,
     REMAINING_WORDS,
-    NOT_ADDED
+    NOT_ADDED,
+    NUMBER_OF_WORDS
   ) {
     for (let currentRow = 0; currentRow < DIMENSIONS; currentRow++) {
       let CURRENT_ROW = [];
@@ -624,7 +628,8 @@ function Board() {
       REMAINING_WORDS,
       ADDED_WORDS,
       START_SQUARES,
-      NOT_ADDED
+      NOT_ADDED,
+      NUMBER_OF_WORDS
     );
 
     for (let i = 0; i < ascendencyNums.length; i++) {
