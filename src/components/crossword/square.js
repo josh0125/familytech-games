@@ -1,4 +1,6 @@
 import styles from "@/styles/crossword.module.css";
+import React, { useState } from 'react';
+
 
 function Square(props) {
   let {
@@ -13,8 +15,11 @@ function Square(props) {
     inputLocation,
   } = props;
 
+  const [correct, setCorrect] = useState(false);
+
   function handleChange(event) {
     handleSquareInput(event.target.value, row, col, inputLocation);
+    event.target.value.toUpperCase() == key_character ? setCorrect(true) : setCorrect(false);
   }
 
   function handleDownKey(event) {
@@ -41,7 +46,10 @@ function Square(props) {
                   width: 0,
                   border: 0,
                 }
-              : { backgroundColor: "white", borderColor: "black" }
+              : correct == true
+              ? { backgroundColor: "green", borderColor: "black" }
+              : { backgroundColor: "red", borderColor: "black" }
+
           }
           maxLength={1}
           type="text"

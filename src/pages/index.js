@@ -1,14 +1,21 @@
 import { useEffect } from "react";
 import Head from "next/head";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, TextField } from "@mui/material";
+import React, { useState } from 'react';
+
 
 import Game from "@/components/home/game";
 import { GAMES } from "@/data/games";
 import styles from "@/styles/Home.module.css";
 
 
-
 export default function Home() {
+
+  const [input, setInput] = useState(0);
+  
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
 
   // To change background color of body
   useEffect(() => {
@@ -28,8 +35,16 @@ export default function Home() {
         <link rel="icon"     href="/favicon.ico" />
       </Head>
 
+      {/* Add an input field for user input */}
+      <TextField
+        label="Input Field"
+        variant="outlined"
+        value={input}
+        onChange={handleInputChange}
+      />
 
       <Box sx={{ flexGrow: 1 }}>
+
         {/* See https://mui.com/material-ui/react-grid/#auto-layout for more details on the Box and Grid tags */}
 
         <Grid
@@ -52,6 +67,7 @@ export default function Home() {
                   rules={game.rules}
                   pitch={game.pitch}
                   prodReady={game.isProductionReady}
+                  input={input}
                   // When mapping arrays in React, each child should have a unique id.
                   key={game.title}
                 ></Game>
@@ -62,6 +78,8 @@ export default function Home() {
 
         </Grid>
       </Box>
+      
+      
 
     </div>
   );
