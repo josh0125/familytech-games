@@ -1,8 +1,10 @@
 import Clue from "./clue";
 import { useEffect, useState } from "react";
+import Timer from './timer'
+
 
 function ClueList(props) {
-  let { verticalClues, horizontalClues, result } = props;
+  let { verticalClues, horizontalClues, result, numberOfWords } = props;
   const [clueList, setClueList] = useState({VERTICAL: verticalClues, HORIZONTAL:horizontalClues});
   useEffect(() => {
     setClueList(makeClueList());
@@ -37,6 +39,10 @@ function ClueList(props) {
   return (
     <>
       <div>
+        <Timer></Timer>
+        <h3>Answers can be seen by right-clicking the clue</h3>
+        <h3>Click on clue to see the full name</h3>
+
         <h1>Clues</h1>
         <h2>Down</h2>
         {clueList.VERTICAL.map((clues) => {
@@ -54,7 +60,7 @@ function ClueList(props) {
             </div>
           );
         })}
-        <h3>Answers can be seen by right-clicking the clue</h3>
+        
       </div>
     </>
   );

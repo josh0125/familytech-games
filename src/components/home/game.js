@@ -16,7 +16,7 @@ import { useState } from 'react';
 */
 export default function Game(props) {
 
-  const { title, url, image, pitch, prodReady } = props;
+  const { title, url, image, pitch, prodReady, input } = props;
   const [cardFlip, setCardFlip] = useState(false);
 
 
@@ -80,7 +80,6 @@ function prodGame(title, url, image, pitch, cardFlip) {
           <div className={styles.flip_card_back}>
             <GameCardPitch pitch={pitch} title={title}/>
           </div>
-
 
         </div>
       </div>

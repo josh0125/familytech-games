@@ -10,9 +10,20 @@ function Clue(props) {
   const [currentPerson, setCurrentPerson] = useState(null);
   const { userFSData } = useUser();
 
+  const transformWord = (word) => {
+    if (word.length < 3) {
+      return word; // Handle words with less than three characters
+    }
+
+    const firstThreeLetters = word.slice(0, 3);
+    const underscores = '_'.repeat(word.length - 3);
+
+    return firstThreeLetters + underscores;
+  };
   // Switches between clue and answer
   function handleContextMenu(event) {
     event.preventDefault();
+    
     setDisplayClue(!displayClue);
   }
 
@@ -39,7 +50,7 @@ function Clue(props) {
         onContextMenu={handleContextMenu}
         onClick={displayClue ? null : handleNameClick}
       >
-        {number + ". " + (displayClue ? clue : word)}
+        {number + ". " + (displayClue ? clue : transformWord(word))}
       </div>
       <Modal open={showPersonInfo} onClose={() => setShowPersonInfo(false)}>
         <Person personData={currentPerson}/>
